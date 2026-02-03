@@ -1,20 +1,17 @@
 #pragma once
 
-#include <string>
-#include <variant>
-#include <vector>
+#include <memory>
 
-struct Node {
-    Node(char c, unsigned f) : ch(c), freq(f) {}
-    Node(Node* l, Node* r) : ch(0), freq(l->freq + r->freq), left(l), right(r) {}
-    
-    char ch;
-    unsigned freq;
-    Node* left = nullptr;
-    Node* right = nullptr;
+namespace hec {
+struct hmTreeNode {
+    hmTreeNode(char c, unsigned f) : ch(c), freq(f) {}
 
-    bool isLeaf() const {
-        return left == nullptr && right == nullptr;
-    }
+    hmTreeNode(std::unique_ptr<hmTreeNode> l, std::unique_ptr<hmTreeNode> r) 
+        : ch(0), freq(l->freq + r->freq), left(std::move(l)), right(std::move(r)) {}
+
+    char ch{};
+    unsigned freq{};
+    std::unique_ptr<hmTreeNode> left{};
+    std::unique_ptr<hmTreeNode> right{};
 };
-
+}
