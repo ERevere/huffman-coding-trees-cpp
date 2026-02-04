@@ -10,11 +10,11 @@ namespace hec {
 class hecEncoder {
 public:
     explicit hecEncoder(const std::string &str) : toEncode(str) {}
-    std::pair<hmTreeNode*, std::string> encode(std::string &str);
+    std::pair<std::unique_ptr<hec::hmTreeNode>, std::string> encode(std::string &str);
 
 private:
     std::string toEncode;
-    hmTreeNode* root = nullptr;
+    std::unique_ptr<hmTreeNode> root;
 };
 
 

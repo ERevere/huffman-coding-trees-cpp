@@ -9,12 +9,12 @@ namespace hec {
 
 class hecDecoder {
 public:
-    explicit hecDecoder(std::pair<hmTreeNode*, std::string> &tstr) : treeStream(tstr) {}
+    hecDecoder(std::pair<std::unique_ptr<hmTreeNode>, std::string> tstr) : treeStream(std::move(tstr)) {}
     std::string decode();
 
 private:
-    std::pair<hmTreeNode*, std::string> treeStream;
-    hmTreeNode* root = nullptr;
+    std::pair<std::unique_ptr<hec::hmTreeNode>, std::string> treeStream;
+    hmTreeNode* root() const { return treeStream.first.get(); }
 };
 
 }
