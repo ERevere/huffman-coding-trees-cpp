@@ -1,6 +1,7 @@
 #pragma once
 
 #include "huffman_tree.h"
+#include "encoded_data.h"
 
 #include <string>
 #include <utility>
@@ -9,12 +10,11 @@ namespace hec {
 
 class hecDecoder {
 public:
-    explicit hecDecoder(std::pair<hmTreeNode*, std::string> &tstr) : treeStream(tstr) {}
+    hecDecoder(EncodedData data) : data_(std::move(data)){}
     std::string decode();
 
 private:
-    std::pair<hmTreeNode*, std::string> treeStream;
-    hmTreeNode* root = nullptr;
+    EncodedData data_;
 };
 
 }
