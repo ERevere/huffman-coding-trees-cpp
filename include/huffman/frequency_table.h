@@ -17,7 +17,7 @@ struct FrequencyTable {
     }
 
     bool empty() const{
-        return std::accumulate(table.begin(), table.end(), 0) == 0;
+        return !(std::accumulate(table.begin(), table.end(), std::uint64_t{0}));
     }
 
     size_t total() const {
