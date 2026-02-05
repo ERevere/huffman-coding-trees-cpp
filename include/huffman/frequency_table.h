@@ -6,22 +6,22 @@
 
 namespace hec {
 struct FrequencyTable {
-    std::array<std::uint32_t, 256> table{};
+  std::array<std::uint32_t, 256> table{};
 
-    void addByte(std::uint8_t byte) {
-        this->table[static_cast<unsigned char>(byte)]++;
-    }
+  void addByte(std::uint8_t byte) {
+    this->table[static_cast<unsigned char>(byte)]++;
+  }
 
-    std::uint32_t countByte(std::uint8_t byte) const {
-        return this->table[static_cast<unsigned char>(byte)];
-    }
+  std::uint32_t countByte(std::uint8_t byte) const {
+    return this->table[static_cast<unsigned char>(byte)];
+  }
 
-    bool empty() const{
-        return !(std::accumulate(table.begin(), table.end(), std::uint64_t{0}));
-    }
+  bool empty() const {
+    return !(std::accumulate(table.begin(), table.end(), std::uint64_t{0}));
+  }
 
-    size_t total() const {
-        return std::accumulate(table.begin(), table.end(), std::uint64_t{0});
-    }
+  size_t total() const {
+    return std::accumulate(table.begin(), table.end(), std::uint64_t{0});
+  }
 };
-}
+} // namespace hec
