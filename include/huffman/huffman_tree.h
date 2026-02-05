@@ -14,5 +14,10 @@ struct hmTreeNode {
   unsigned freq{};
   std::unique_ptr<hmTreeNode> left{};
   std::unique_ptr<hmTreeNode> right{};
+
+  bool isLeaf() const { return left == nullptr && right == nullptr; }
+
+  void serializeTree(BitWriter &bw, const hmTreeNode &node);
+  std::unique_ptr<hmTreeNode> deserializeTree(BitReader &br);
 };
 } // namespace hec
