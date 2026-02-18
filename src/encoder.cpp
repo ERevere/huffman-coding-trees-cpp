@@ -4,8 +4,8 @@
 #include <sstream>
 #include <vector>
 
-#include "include/huffman/encoder.h"
 #include "include/huffman/bit_io.h"
+#include "include/huffman/encoder.h"
 #include "include/huffman/format.h"
 #include "include/huffman/frequency_table.h"
 
@@ -119,11 +119,11 @@ EncodedData hecEncoder::encode(std::string &str) {
   return data;
 }
 
-bool hecEncoder::encodeFile(const std::string &inPath,
+void hecEncoder::encodeFile(const std::string &inPath,
                             const std::string &outPath) {
   std::ifstream in(inPath, std::ios::binary);
   if (!in.is_open())
-    return false;
+    throw std::logic_error("Input file not found for encoding");
 
   std::ostringstream inputBuf;
   inputBuf << in.rdbuf();
@@ -133,15 +133,17 @@ bool hecEncoder::encodeFile(const std::string &inPath,
 
   std::ofstream out(outPath, std::ios::binary);
   if (!out.is_open())
-    return false;
+    throw std::logic_error("Output file not found for writing");
 
   FileHeader header;
   header.originalSize = data.originalSize;
 
-  if ((!writeHeader(out, header)) || (!data.tree))
-    return false;
+  if (!writeHeader(out, header))
+    throw std::logic_error("Failed to write header");
   if (data.originalSize == 0)
-    return true;
+    return;
+  if (!data.tree)
+    throw std::logic_error("Missing Huffman tree for non-empty input");
 
   BitWriter bw(out);
   hmTreeNode::serialiseTree(bw, *data.tree);
@@ -151,7 +153,8 @@ bool hecEncoder::encodeFile(const std::string &inPath,
   }
 
   bw.flush();
-  return !out.fail();
+  if (out.fail())
+    throw std::runtime_error("Output stream failed");
 }
 
 } // namespace hec

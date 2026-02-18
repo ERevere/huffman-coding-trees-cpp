@@ -10,12 +10,12 @@ namespace hec {
 
 class hecDecoder {
 public:
-  hecDecoder(EncodedData data) : data_(std::move(data)) {}
+  hecDecoder(EncodedData data) : mData(std::move(data)) {}
   void decodeFile(const std::string &inputPath, const std::string &outputPath);
   std::string decode();
 
 private:
-  EncodedData data_;
+  EncodedData mData;
 };
 
 } // namespace hec

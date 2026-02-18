@@ -3,8 +3,8 @@
 #include <sstream>
 #include <string>
 
-#include "include/huffman/decoder.h"
 #include "include/huffman/bit_io.h"
+#include "include/huffman/decoder.h"
 #include "include/huffman/format.h"
 #include "include/huffman/frequency_table.h"
 #include "include/huffman/huffman_tree.h"
@@ -12,25 +12,25 @@
 namespace hec {
 
 std::string hecDecoder::decode() {
-  if (data_.tree == nullptr) {
-    if (data_.originalSize != 0)
+  if (mData.tree == nullptr) {
+    if (mData.originalSize != 0)
       throw std::logic_error("Missing tree");
     else
       return "";
   }
 
-  std::istringstream bitIn(data_.bitstream);
+  std::istringstream bitIn(mData.bitstream);
   BitReader br(bitIn);
 
   std::uint64_t produced = 0;
   std::string out;
-  out.reserve(static_cast<size_t>(data_.originalSize));
+  out.reserve(static_cast<size_t>(mData.originalSize));
 
-  hmTreeNode *root = data_.tree.get();
+  hmTreeNode *root = mData.tree.get();
   hmTreeNode *current = root;
 
   if (root->isLeaf()) {
-    while (produced < data_.originalSize) {
+    while (produced < mData.originalSize) {
       out.push_back(root->ch);
       produced++;
     }
@@ -38,7 +38,7 @@ std::string hecDecoder::decode() {
   }
 
   bool bit = false;
-  while (produced < data_.originalSize) {
+  while (produced < mData.originalSize) {
     if (!br.readBit(bit)) {
       throw std::logic_error("Readbit failure");
     }
@@ -76,10 +76,9 @@ void hecDecoder::decodeFile(const std::string &inPath,
 
   std::ifstream in(inPath, std::ios::binary);
   std::ofstream out(outPath, std::ios::binary);
-  if (!out.is_open())
-    throw std::logic_error("Output file not found for writing");
-  if (!in.is_open())
-    throw std::logic_error("Input file not found for decoding");
+
+  if (!out.is_open() || !in.is_open())
+    throw std::logic_error("In/Output file not found for writing");
   if (!hec::readHeader(in, hdr))
     throw std::logic_error("Header read failed or magic didn't match");
   if (hdr.originalSize == 0) {
@@ -132,7 +131,8 @@ void hecDecoder::decodeFile(const std::string &inPath,
       produced++;
     }
   }
-  return;
+  if (out.fail())
+    throw std::runtime_error("Output stream failed");
 }
 
 } // namespace hec
