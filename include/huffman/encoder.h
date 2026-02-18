@@ -10,14 +10,14 @@ namespace hec {
 
 class hecEncoder {
 public:
-  explicit hecEncoder(const std::string &str) : toEncode(str) {}
+  explicit hecEncoder(const std::string &str) : mToEncode(str) {}
 
   EncodedData encode(std::string &str);
-  bool encodeFile(const std::string &inputPath, const std::string &outputPath);
+  void encodeFile(const std::string &inputPath, const std::string &outputPath);
 
 private:
-  std::string toEncode;
-  std::unique_ptr<hmTreeNode> root;
+  std::string mToEncode;
+  std::unique_ptr<hmTreeNode> mRoot;
 };
 
 } // namespace hec
