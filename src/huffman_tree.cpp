@@ -3,7 +3,7 @@
 
 namespace hec {
 
-void serializeTree(BitWriter &bw, const hmTreeNode &node) {
+void hmTreeNode::serialiseTree(BitWriter &bw, const hmTreeNode &node) {
   if (node.isLeaf()) {
     bw.writeBit(1);
     uint8_t byteValue =
@@ -12,11 +12,11 @@ void serializeTree(BitWriter &bw, const hmTreeNode &node) {
     return;
   }
   bw.writeBit(0);
-  serializeTree(bw, *node.left);
-  serializeTree(bw, *node.right);
+  serialiseTree(bw, *node.left);
+  serialiseTree(bw, *node.right);
 }
 
-std::unique_ptr<hmTreeNode> deserializeTree(BitReader &br) {
+std::unique_ptr<hmTreeNode> hmTreeNode::deserialiseTree(BitReader &br) {
   bool marker;
   std::uint64_t bits;
   if (!br.readBit(marker))
@@ -29,8 +29,8 @@ std::unique_ptr<hmTreeNode> deserializeTree(BitReader &br) {
     char ch = static_cast<char>(uc);
     return std::make_unique<hmTreeNode>(ch, 0);
   } else {
-    auto left = deserializeTree(br);
-    auto right = deserializeTree(br);
+    auto left = deserialiseTree(br);
+    auto right = deserialiseTree(br);
     if (left == nullptr || right == nullptr)
       return nullptr;
     return std::make_unique<hmTreeNode>(std::move(left), std::move(right));

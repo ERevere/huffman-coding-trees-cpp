@@ -3,6 +3,10 @@
 #include <memory>
 
 namespace hec {
+
+class BitWriter;
+class BitReader;
+
 struct hmTreeNode {
   hmTreeNode(char c, unsigned f) : ch(c), freq(f) {}
 
@@ -17,7 +21,7 @@ struct hmTreeNode {
 
   bool isLeaf() const { return left == nullptr && right == nullptr; }
 
-  void serializeTree(BitWriter &bw, const hmTreeNode &node);
-  std::unique_ptr<hmTreeNode> deserializeTree(BitReader &br);
+  static void serialiseTree(BitWriter &bw, const hmTreeNode &node);
+  static std::unique_ptr<hmTreeNode> deserialiseTree(BitReader &br);
 };
 } // namespace hec

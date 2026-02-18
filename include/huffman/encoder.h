@@ -11,7 +11,9 @@ namespace hec {
 class hecEncoder {
 public:
   explicit hecEncoder(const std::string &str) : toEncode(str) {}
+
   EncodedData encode(std::string &str);
+  bool encodeFile(const std::string &inputPath, const std::string &outputPath);
 
 private:
   std::string toEncode;
