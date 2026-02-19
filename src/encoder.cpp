@@ -36,11 +36,14 @@ inline static void dfs(const hmTreeNode *node, std::string &path,
 }
 
 EncodedData hecEncoder::encode(std::string &str) {
+  mToEncode = str;
+  mRoot.reset();
+
   hec::FrequencyTable table;
-  const size_t len = str.length();
+  const size_t len = mToEncode.length();
 
   for (size_t idx = 0; idx < len; ++idx) {
-    unsigned char ch = static_cast<unsigned char>(str[idx]);
+    unsigned char ch = static_cast<unsigned char>(mToEncode[idx]);
     uint8_t byte = static_cast<uint8_t>(ch);
     table.addByte(byte);
   }
@@ -91,17 +94,17 @@ EncodedData hecEncoder::encode(std::string &str) {
     std::push_heap(minHeap.begin(), minHeap.end(), comp);
   }
 
-  std::unique_ptr<hmTreeNode> root = std::move(minHeap[0]);
+  mRoot = std::move(minHeap[0]);
   minHeap.clear();
 
   std::array<std::string, 256> codes{};
   std::string path;
-  dfs(root.get(), path, codes);
+  dfs(mRoot.get(), path, codes);
 
   std::ostringstream bitOut;
   BitWriter bw(bitOut);
 
-  for (char ch : str) {
+  for (char ch : mToEncode) {
     const auto byteIndex = static_cast<unsigned char>(ch);
     const std::string &code = codes[byteIndex];
 
@@ -113,8 +116,8 @@ EncodedData hecEncoder::encode(std::string &str) {
   bw.flush();
 
   EncodedData data;
-  data.originalSize = static_cast<std::uint64_t>(str.size());
-  data.tree = std::move(root);
+  data.originalSize = static_cast<std::uint64_t>(mToEncode.size());
+  data.tree = std::move(mRoot);
   data.bitstream = bitOut.str();
   return data;
 }
