@@ -42,3 +42,7 @@ build/
 *.dwo
 
 .vscode/
+
+# JetBrains stuff
+.idea/
+*.iml
