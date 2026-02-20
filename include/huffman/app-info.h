@@ -4,7 +4,7 @@
 #include <vector>
 
 struct appInfo {
-  appInfo();
+  appInfo() = default;
 
 public:
   const std::string getName() { return this->PROGRAM_NAME; }

@@ -3,38 +3,38 @@
 #include <string>
 
 struct cliInfo {
-  cliInfo();
+  cliInfo() = default;
 
 public:
-  const std::string cliInfo::getMenuTitle() const { return this->MENU_TITLE; }
+  const std::string getMenuTitle() const { return this->MENU_TITLE; }
 
-  const std::string cliInfo::getPromptOption() const {
+  const std::string getPromptOption() const {
     return this->PROMPT_OPTION;
   }
 
-  const std::string cliInfo::getPromptInputPath() const {
+  const std::string getPromptInputPath() const {
     return this->PROMPT_INPUT_PATH;
   }
 
-  const std::string cliInfo::getMsgInvalidOption() const {
+  const std::string getMsgInvalidOption() const {
     return this->MSG_INVALID_OPTION;
   }
 
-  const std::string cliInfo::getMsgGoodbye() const { return this->MSG_GOODBYE; }
+  const std::string getMsgGoodbye() const { return this->MSG_GOODBYE; }
 
-  const std::string cliInfo::getEncodeSuffix() const {
+  const std::string getEncodeSuffix() const {
     return this->ENCODE_SUFFIX;
   }
 
-  const std::string cliInfo::getDecodeSuffix() const {
+  const std::string getDecodeSuffix() const {
     return this->DECODE_SUFFIX;
   }
 
-  const std::string cliInfo::getEncodeExtension() const {
+  const std::string getEncodeExtension() const {
     return this->ENCODE_EXTENSION;
   }
-  
-  const std::string cliInfo::getDecodeExtension() const {
+
+  const std::string getDecodeExtension() const {
     return this->DECODE_EXTENSION;
   }
 
