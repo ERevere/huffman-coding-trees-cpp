@@ -2,7 +2,9 @@
 
 Huffman coding is a form of lossless compression which makes files smaller using the frequency with which characters appear in a message.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JsTptu56GM8?si=e_WQxR_ScJrE0ip2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Desc](https://img.youtube.com/vi/JsTptu56GM8/maxresdefault.jpg)](https://youtu.be/JsTptu56GM8)
+
+### [Watch this great description on YouTube](https://youtu.be/JsTptu56GM8)
 
 ## Usage
 
