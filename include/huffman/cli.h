@@ -8,9 +8,7 @@ struct cliInfo {
 public:
   const std::string getMenuTitle() const { return this->MENU_TITLE; }
 
-  const std::string getPromptOption() const {
-    return this->PROMPT_OPTION;
-  }
+  const std::string getPromptOption() const { return this->PROMPT_OPTION; }
 
   const std::string getPromptInputPath() const {
     return this->PROMPT_INPUT_PATH;
@@ -22,13 +20,9 @@ public:
 
   const std::string getMsgGoodbye() const { return this->MSG_GOODBYE; }
 
-  const std::string getEncodeSuffix() const {
-    return this->ENCODE_SUFFIX;
-  }
+  const std::string getEncodeSuffix() const { return this->ENCODE_SUFFIX; }
 
-  const std::string getDecodeSuffix() const {
-    return this->DECODE_SUFFIX;
-  }
+  const std::string getDecodeSuffix() const { return this->DECODE_SUFFIX; }
 
   const std::string getEncodeExtension() const {
     return this->ENCODE_EXTENSION;
