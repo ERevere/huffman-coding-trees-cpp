@@ -46,3 +46,6 @@ build/
 # JetBrains stuff
 .idea/
 *.iml
+
+# MacOS malarkey
+.DS_Store
